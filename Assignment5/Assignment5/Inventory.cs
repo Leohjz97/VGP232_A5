@@ -54,7 +54,24 @@ namespace Assignment5
         /// <returns>True if you find the item, and false if it does not exist.</returns>
         bool TakeItem(string name, out Item found)
         {
-            throw new NotImplementedException();
+            found = null;
+            foreach (var item in items)
+            {
+                if (item.Key.Name == name)
+                {
+                    found = item.Key;
+                    found.Amount--;
+                }
+
+                if (found.Amount <= 0)
+                {
+                    items.Remove(found);
+                }
+
+                availableSlots++;
+                return true;
+            }
+            return false;
         }
 
         /// <summary>
@@ -67,7 +84,23 @@ namespace Assignment5
             // Add it in the items dictionary and increment it the number if it already exist
             // Reduce the slot once it's been added.
             // returns false if the inventory is full
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            if (availableSlots <= 0)
+            {
+                Console.WriteLine("No item input.");
+                return false;
+            }
+
+            foreach (var i in items)
+            {
+                if (i.Key.Name == item.Name)
+                {
+                    item.Amount++;
+                }
+            }
+            items.Add(item, 1);
+            availableSlots--;
+            return true;
         }
 
         /// <summary>
@@ -77,7 +110,13 @@ namespace Assignment5
         List<Item> ListAllItems()
         {
             // use a foreach loop to iterate through the key value pairs and duplicate the item base on the quantity.
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            List<Item> list = new List<Item>();
+            foreach (var item in items)
+            {
+                list.Add(item.Key);
+            }
+            return list;
         }
     }
 }
