@@ -8,17 +8,17 @@ namespace Assignment5
     [TestFixture]
     public class InventoryTest
     {
-        Inventory inventory = new Inventory(10);
-        Item item1 = new Item("Sword", 5, ItemGroup.Equipment);
-        Item item2 = new Item("Axe", 5, ItemGroup.Equipment);
+        Inventory inventory = new Inventory(5);
+        Item item1 = new Item("Sword", 1, ItemGroup.Equipment);
+        Item item2 = new Item("Axe", 1, ItemGroup.Equipment);
 
         [SetUp]
         public void SetUp()
         {
             inventory.Reset();
             inventory.AddItem(item1);
-            inventory.AddItem(item2);
         }
+
         [TearDown]
         public void CleanUp()
         {
@@ -29,44 +29,39 @@ namespace Assignment5
         [Test]
         public void RemoveItemFound()
         {
-            int oldSlots = inventory.AvailableSlots;
-            inventory.TakeItem(item1.Name, out Item found);
-            Assert.AreEqual(item1.Name, found.Name);
-            Assert.IsTrue((oldSlots + 1) == inventory.AvailableSlots);
+            int slot = inventory.AvailableSlots;
+            Item item;
+
+            Assert.IsTrue(inventory.TakeItem("Sword", out item));
+            Assert.AreEqual(slot + 1, inventory.AvailableSlots);
         }
 
         [Test]
         public void RemoveItemNotFound()
         {
             int slot = inventory.AvailableSlots;
-            inventory.TakeItem("Apple", out Item found);
-            Assert.IsTrue(found == null);
+            Item item;
+            Assert.IsFalse(inventory.TakeItem("Axe", out item));
             Assert.AreEqual(slot, inventory.AvailableSlots);
         }
 
         [Test]
         public void AddItem()
         {
-            int slot = inventory.AvailableSlots;
-            Item newItem = new Item("Bandage", 5, ItemGroup.Consumable);
-            inventory.AddItem(newItem);
-            Assert.IsTrue((slot - 1) == inventory.AvailableSlots);
+            Assert.IsTrue(inventory.AddItem(item2));
+            Assert.AreEqual(3, inventory.AvailableSlots);
 
-            List<Item> list = inventory.ListAllItems();
-            bool isExists = false;
-            foreach (var i in list)
-            {
-                if (i.Name == newItem.Name)
-                    isExists = true;
-            }
-            Assert.IsTrue(isExists);
+            List<Item> items = inventory.ListAllItems();
+            Assert.AreEqual(2, items.Count);
+            Assert.AreEqual(item1, items[0]);
+            Assert.AreEqual(item2, items[1]);
         }
 
         [Test]
-        public void Reset()
+        public void RestInventory()
         {
             inventory.Reset();
-            Assert.IsTrue(inventory.AvailableSlots == 10);
+            Assert.AreEqual(inventory.MaxSlots, inventory.AvailableSlots);
         }
     }
 }

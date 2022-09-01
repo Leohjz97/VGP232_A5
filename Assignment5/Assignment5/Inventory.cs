@@ -35,6 +35,7 @@ namespace Assignment5
         {
             availableSlots = maxSlots;
             maxSlots = slots;
+            items = new Dictionary<Item, int>();
         }
 
         /// <summary>
@@ -61,16 +62,17 @@ namespace Assignment5
                 {
                     found = item.Key;
                     found.Amount--;
+                    
+                    if (found.Amount <= 0)
+                    {
+                        items.Remove(found);
+                    }
+                    
+                    availableSlots++;
+                    return true;
                 }
-
-                if (found.Amount <= 0)
-                {
-                    items.Remove(found);
-                }
-
-                availableSlots++;
-                return true;
             }
+            Console.WriteLine($"Can't find {0} in the Inventory.",name);
             return false;
         }
 

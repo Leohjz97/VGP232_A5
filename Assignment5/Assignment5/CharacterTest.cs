@@ -49,26 +49,16 @@ namespace Assignment5
         [Test]
         public void RestoreHealth()
         {
-            Assert.IsTrue(myCharacter.IsAlive);
-            myCharacter.TakeDamage(30);
-            Assert.IsTrue(myCharacter.IsAlive);
-
-            int healAmount = 10;
-            int hp = myCharacter.Health;
-            myCharacter.RestoreHealth(healAmount);
-            Assert.IsTrue(myCharacter.Health == (hp + healAmount));
+            myCharacter.RestoreHealth(30); 
+            Assert.AreEqual(30, myCharacter.Health);
         }
 
         [Test]
         public void RestoreHealthAndRevive()
         {
+            myCharacter.RestoreHealth(30);
+            Assert.AreEqual(30, myCharacter.Health);
             Assert.IsTrue(myCharacter.IsAlive);
-            myCharacter.TakeDamage(200);
-            Assert.IsFalse(myCharacter.IsAlive);
-
-            myCharacter.IsAlive = true;
-            myCharacter.RestoreHealth(999);
-            Assert.IsTrue(myCharacter.Health == myCharacter.MaxHealth);
         }
     }
 }
