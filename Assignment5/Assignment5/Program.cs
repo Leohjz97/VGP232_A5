@@ -8,11 +8,11 @@ namespace Assignment5
         {
             Console.WriteLine("Welcome to the Adventure of Assignment 5!");
 
-            Character hero = new Character("Bob", RaceCategory.Human, 100);
+            Character hero = new Character("Jim Raynor", RaceCategory.Human, 100);
 
-            Console.WriteLine("{0} has entered the forest", hero.Name);
+            Console.WriteLine("{0} has entered the BATTLEFIELD", hero.Name);
 
-            string monster = "goblin";
+            string monster = "Hydralisk";
             int damage = 10;
 
             Console.WriteLine("A {0} appeared and attacks {1}", monster, hero.Name);
